@@ -249,75 +249,80 @@ flowchart LR
 
 ```
 QuantHedgeFund/
-
- config/ # Configuration and settings
- __init__.py # Module exports
- settings.py # Pydantic settings management
- constants.py # Enums and default parameters
- logging_config.py # Loguru logging setup
-
- qsconnect/ # DATA LAYER
- __init__.py # Main Client import
- client.py # Primary data interface
- api/
- base_client.py # Rate-limited HTTP client
- fmp_client.py # FMP API implementation
- database/
- duckdb_manager.py # Database operations
- cache/
- cache_manager.py # Parquet caching
- bundle/
- zipline_bundler.py # Zipline bundle creation
- utils/
- paths.py # Path utilities
-
- qsresearch/ # RESEARCH LAYER
- __init__.py
- features/
- momentum.py # QSMOM factor
- forward_returns.py # ML target creation
- factor_engine.py # Factor computation engine
- technical_indicators.py # pandas-ta integration
- preprocessors/
- price_preprocessor.py # Data cleaning
- universe_screener.py # Stock filtering
- backtest/
- run_backtest.py # Main backtest runner
- parameter_sweep.py # Iterative sweeps
- strategy_artifacts.py # Manifest generation
- portfolio_analysis/
- performance_metrics.py # 88+ metrics
- tear_sheets.py # HTML reports
- strategies/
- factor/
- algorithms.py # Signal generation
- config.py # Strategy configs
-
- omega/ # EXECUTION LAYER
- __init__.py
- trading_app.py # IB trading interface
- utils/
- omega_trades_converter.py
-
- workflow/ # LUIGI ORCHESTRATION
- dags/
- 01_ingest_data.py # Complete DAG
- luigi.cfg # Luigi configuration
-
- automation/ # PREFECT ORCHESTRATION
- prefect_flows.py # Production flows
- deployment_manager.py # Model promotion
-
- dashboard/ # STREAMLIT UI
- app.py # Main dashboard
-
- scripts/ # UTILITIES
- setup_database.py # Initialize DB
- download_initial_data.py # First data download
- start_dashboard.py # Launch dashboard
-
- .env.example # Environment template
- .gitignore # Git ignore rules
+│
+├── config/                # Configuration and settings
+│   ├── __init__.py        # Module exports
+│   ├── settings.py        # Pydantic settings management
+│   ├── constants.py       # Enums and default parameters
+│   └── logging_config.py  # Loguru logging setup
+│
+├── qsconnect/             # DATA LAYER
+│   ├── __init__.py        # Main Client import
+│   ├── client.py          # Primary data interface
+│   ├── api/
+│   │   ├── base_client.py # Rate-limited HTTP client
+│   │   └── fmp_client.py  # FMP API implementation
+│   ├── database/
+│   │   └── duckdb_manager.py # Database operations
+│   ├── cache/
+│   │   └── cache_manager.py  # Parquet caching
+│   ├── bundle/
+│   │   └── zipline_bundler.py # Zipline bundle creation
+│   └── utils/
+│       └── paths.py       # Path utilities
+│
+├── qsresearch/            # RESEARCH LAYER
+│   ├── __init__.py
+│   ├── features/
+│   │   ├── momentum.py    # QSMOM factor
+│   │   ├── forward_returns.py # ML target creation
+│   │   ├── factor_engine.py   # Factor computation engine
+│   │   └── technical_indicators.py # pandas-ta integration
+│   ├── preprocessors/
+│   │   ├── price_preprocessor.py # Data cleaning
+│   │   └── universe_screener.py  # Stock filtering
+│   ├── realtime/          # REAL-TIME LAYER (TIP-Search)
+│   │   ├── scheduler.py   # O(K) Inference Scheduler
+│   │   ├── tasks.py       # Real-time Task definitions
+│   │   └── models.py      # Latency-aware Model wrappers
+│   ├── backtest/
+│   │   ├── run_backtest.py # Main backtest runner
+│   │   ├── parameter_sweep.py # Iterative sweeps
+│   │   └── strategy_artifacts.py # Manifest generation
+│   ├── portfolio_analysis/
+│   │   ├── performance_metrics.py # 88+ metrics
+│   │   └── tear_sheets.py # HTML reports
+│   └── strategies/
+│       └── factor/
+│           ├── algorithms.py # Signal generation
+│           └── config.py     # Strategy configs
+│
+├── omega/                 # EXECUTION LAYER
+│   ├── __init__.py
+│   ├── trading_app.py     # IB trading interface
+│   └── utils/
+│       └── omega_trades_converter.py
+│
+├── workflow/              # LUIGI ORCHESTRATION
+│   ├── dags/
+│   │   └── 01_ingest_data.py # Complete DAG
+│   └── luigi.cfg          # Luigi configuration
+│
+├── automation/            # PREFECT ORCHESTRATION
+│   ├── prefect_flows.py   # Production flows
+│   └── deployment_manager.py # Model promotion
+│
+├── dashboard/             # STREAMLIT UI
+│   └── app.py             # Main dashboard
+│
+├── scripts/               # UTILITIES
+│   ├── setup_database.py       # Initialize DB
+│   ├── download_initial_data.py # First data download
+│   ├── start_dashboard.py      # Launch dashboard
+│   └── simulate_realtime_inference.py # TIP-Search simulation
+│
+├── .env.example           # Environment template
+├── .gitignore             # Git ignore rules
  requirements.txt # Python dependencies
  pyproject.toml # Project metadata
  README.md # This file
