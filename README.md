@@ -63,6 +63,30 @@ Unlike simple trading bots, this is a **full quant infrastructure**:
 | Automation | Manual | Luigi + Prefect orchestration |
 | Execution | Basic orders | Portfolio rebalancing with risk controls |
 
+### Why This Matters in 2025
+
+The financial markets in 2025 demand a new level of sophistication:
+
+- **AI-Driven Markets** - Institutional players now use advanced ML models. This system levels the playing field with XGBoost integration and MLflow experiment tracking.
+
+- **High-Frequency Data** - Markets move faster than ever. DuckDB handles 900M+ rows efficiently, enabling analysis that would crash traditional tools.
+
+- **Volatility & Uncertainty** - Factor-based strategies like QSMOM have historically outperformed during volatile periods by capturing momentum while avoiding short-term noise.
+
+- **Regulatory Complexity** - Full audit trails via MLflow ensure every backtest is reproducible and documented.
+
+- **Cost Efficiency** - No expensive Bloomberg terminals or proprietary platforms. This is 100% open-source Python running on your own infrastructure.
+
+**Key 2025 Market Advantages:**
+
+| Challenge | How This System Helps |
+|-----------|----------------------|
+| Rising interest rates | Factor backtesting across multiple rate regimes (2015-2025) |
+| AI/Tech sector rotations | Universe screening filters 500+ stocks by liquidity and sector |
+| Increased retail participation | Automated rebalancing removes emotional decision-making |
+| Geopolitical risk | Risk controls and position limits protect against drawdowns |
+| Information overload | Streamlit dashboard surfaces only actionable signals |
+
 ---
 
 ## Architecture
