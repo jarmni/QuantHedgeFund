@@ -60,19 +60,19 @@ st.markdown("""
 def main():
     # Sidebar: System Health & Emergency Controls
     with st.sidebar:
-        st.markdown(f"{render_icon('activity')} ### System Health", unsafe_allow_html=True)
+        st.markdown(f'<h3 style="display:flex; align-items:center;">{render_icon("activity")} System Health</h3>', unsafe_allow_html=True)
         
         colH1, colH2 = st.columns([1.5, 1])
         with colH1:
-            st.markdown(f"{render_icon('check-circle', '#00ff88')} IBKR API", unsafe_allow_html=True)
-            st.markdown(f"{render_icon('check-circle', '#00ff88')} Data Feed", unsafe_allow_html=True)
+            st.markdown(f'<div style="display:flex; align-items:center; margin-bottom:8px;">{render_icon("check-circle", "#00ff88")} IBKR API</div>', unsafe_allow_html=True)
+            st.markdown(f'<div style="display:flex; align-items:center;">{render_icon("check-circle", "#00ff88")} Data Feed</div>', unsafe_allow_html=True)
         with colH2:
-            st.markdown(f'<span class="status-dot"></span><span class="status-text">Live</span>', unsafe_allow_html=True)
-            st.markdown(f'<span class="status-dot"></span><span class="status-text">Online</span>', unsafe_allow_html=True)
+            st.markdown(f'<div style="margin-bottom:8px;"><span class="status-dot"></span><span class="status-text">Live</span></div>', unsafe_allow_html=True)
+            st.markdown(f'<div><span class="status-dot"></span><span class="status-text">Online</span></div>', unsafe_allow_html=True)
             
         st.divider()
         
-        st.markdown(f"{render_icon('shield', '#e74c3c')} ### Emergency Controls", unsafe_allow_html=True)
+        st.markdown(f'<h3 style="display:flex; align-items:center; color:#e74c3c;">{render_icon("shield", "#e74c3c")} Emergency Controls</h3>', unsafe_allow_html=True)
         
         if not st.session_state.halted:
             if st.button("HALT ALL TRADING", type="primary", use_container_width=True):
@@ -92,9 +92,10 @@ def main():
                 st.toast("Flattening portfolio...")
 
         st.divider()
-        st.markdown(f"{render_icon('cog')} ### Config", unsafe_allow_html=True)
+        st.markdown(f'<h3 style="display:flex; align-items:center;">{render_icon("cog")} Config</h3>', unsafe_allow_html=True)
         st.text_input("Daily Loss Limit (USD)", value="5,000")
         st.text_input("Max Symbol Exposure (%)", value="20")
+
 
 
     # Halt Banner
