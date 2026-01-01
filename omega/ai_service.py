@@ -12,16 +12,38 @@ class MarketAnalyst:
     """
     
     def __init__(self, api_key: Optional[str] = None):
-        # Prioritize Groq as requested by user
-        from dotenv import load_dotenv
+        from dotenv import load_dotenv, find_dotenv
         from pathlib import Path
+        import shutil
         
-        # Explicitly load .env from project root to ensure keys are found locally
-        env_path = Path(__file__).resolve().parent.parent / '.env'
-        load_dotenv(dotenv_path=env_path)
+        # 1. Try finding .env intelligently
+        env_path = find_dotenv()
+        if not env_path:
+            # Fallback to absolute calculation
+            env_path = Path(__file__).resolve().parent.parent / '.env'
         
-        # Try standard env var, then user custom var
+        logger.info(f"🔍 Loading .env from: {env_path}")
+        load_dotenv(dotenv_path=env_path, override=True)
+        
+        # 2. Try standard env var
         self.groq_key = os.getenv("GROQ_API_KEY") or os.getenv("GROK_API_KEY")
+        
+        # 3. Last Resort: Manual file parse (Brute force)
+        if not self.groq_key and os.path.exists(env_path):
+            try:
+                with open(env_path, 'r') as f:
+                    for line in f:
+                        if line.startswith("GROQ_API_KEY=") or line.startswith("GROK_API_KEY="):
+                            self.groq_key = line.split("=", 1)[1].strip().strip("'").strip('"')
+                            logger.info("✅ Found API Key via manual file parse")
+                            break
+            except Exception as e:
+                logger.error(f"Manual .env parse failed: {e}")
+
+        if not self.groq_key:
+             logger.error("❌ GROQ_API_KEY not found in environment or .env file!")
+             # Do NOT hardcode the key here to avoid git rejection. 
+             # User must ensure .env is correct.
         self.client = Groq(api_key=self.groq_key)
         self.model = "llama-3.3-70b-versatile" # Updated to new supported model
         logger.info("🧠 Initializing AI Service with Groq (Llama3-70b)")
